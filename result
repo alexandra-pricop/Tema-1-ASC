@@ -1,0 +1,5 @@
+./check.sh: line 7: timeout: command not found
+TIMEOUT. Tests exceeded maximum allowed time of 360
+
+Run pylint
+
