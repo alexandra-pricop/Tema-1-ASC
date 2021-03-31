@@ -38,15 +38,14 @@ class Producer(Thread):
         self.republish_wait_time = republish_wait_time
 
     def run(self):
-        print(len(self.products))
-        print(self.products)
         producer_id = self.marketplace.register_producer()
         for product in self.products:
             quantity = product[1]
             cnt = 0
             prod_time = product[2]
             while cnt < quantity:
-                if not self.marketplace.publish(producer_id, product):
+                if self.marketplace.publish(producer_id, product):
+                    time.sleep(prod_time)
                     cnt = cnt + 1
                 else:
                     time.sleep(self.republish_wait_time)

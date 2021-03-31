@@ -40,13 +40,9 @@ class Consumer(Thread):
         self.retry_wait_time = retry_wait_time
 
     def run(self):
-        """
         for cart in self.carts:
             cart_id = self.marketplace.new_cart()
             for index in range(len(cart)):
-                print(cart[index]['type'])
-                print(cart[index]['product'])
-                print(cart[index]['quantity'])
                 operation_type = cart[index]['type']
                 product = cart[index]['product']
                 quantity = cart[index]['quantity']
@@ -62,5 +58,3 @@ class Consumer(Thread):
                         self.marketplace.remove_from_cart(cart_id, product)
                         cnt = cnt + 1
             self.marketplace.place_order(cart_id)
-        """
-        pass
