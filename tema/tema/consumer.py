@@ -8,8 +8,6 @@ March 2021
 import time
 from threading import Thread
 
-from tema.marketplace import Marketplace
-
 
 class Consumer(Thread):
     """
@@ -42,10 +40,10 @@ class Consumer(Thread):
     def run(self):
         for cart in self.carts:
             cart_id = self.marketplace.new_cart()
-            for index in range(len(cart)):
-                operation_type = cart[index]['type']
-                product = cart[index]['product']
-                quantity = cart[index]['quantity']
+            for index in cart:
+                operation_type = index['type']
+                product = index['product']
+                quantity = index['quantity']
                 cnt = 0
                 if operation_type == 'add':
 

@@ -85,13 +85,14 @@ class Marketplace:
         :returns True or False. If the caller receives False, it should wait and then try again
         """
 
-        for (a, b) in self.product_list:
-            with self.published_lock:
-                if product == a:
+        with self.published_lock:
+            for (prod, p_id) in self.product_list:
 
-                    self.cart_list[cart_id].append((a, b))
-                    self.product_list.remove((a, b))
-                    self.published_list[b] -= 1
+                if product == prod:
+
+                    self.cart_list[cart_id].append((prod, p_id))
+                    self.product_list.remove((prod, p_id))
+                    self.published_list[p_id] -= 1
 
                     return True
 
@@ -108,12 +109,12 @@ class Marketplace:
         :param product: the product to remove from cart
         """
 
-        for (a, b) in self.cart_list[cart_id]:
-            if product == a:
-                self.cart_list[cart_id].remove((a, b))
-                self.product_list.append((a, b))
+        for (prod, p_id) in self.cart_list[cart_id]:
+            if product == prod:
+                self.cart_list[cart_id].remove((prod, p_id))
+                self.product_list.append((prod, p_id))
                 with self.published_lock:
-                    self.published_list[b] += 1
+                    self.published_list[p_id] += 1
                 break
 
     def place_order(self, cart_id):
@@ -124,7 +125,8 @@ class Marketplace:
         :param cart_id: id cart
         """
         products = []
-        for (product, b) in self.cart_list[cart_id]:
+        for elem in self.cart_list[cart_id]:
+            product = elem[0]
             with self.cart_lock:
                 print("{} bought {}".format(currentThread().getName(), product))
                 products.append(product)

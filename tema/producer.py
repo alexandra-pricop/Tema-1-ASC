@@ -50,4 +50,3 @@ class Producer(Thread):
                         cnt = cnt + 1
                     else:
                         time.sleep(self.republish_wait_time)
-
